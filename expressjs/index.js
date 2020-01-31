@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
@@ -28,11 +29,24 @@ app.use('/card', cardRoutes);
 
 
 
-
-
+const passwordDb = 'jXkdW12nbWf6Uycq';
+const connectString = `mongodb+srv://maksim:${passwordDb}@cluster0-umekr.mongodb.net/test?retryWrites=true&w=majority`;
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+async function start() {
+    try {
+        const passwordDb = 'jXkdW12nbWf6Uycq';
+        const connectString = `mongodb+srv://maksim:${passwordDb}@cluster0-umekr.mongodb.net/test?retryWrites=true&w=majority`;
+        await mongoose.connect(connectString, {useNewUrlParser: true})
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+start();
+
+
