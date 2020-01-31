@@ -29,15 +29,11 @@ app.use('/card', cardRoutes);
 
 
 
-const passwordDb = 'jXkdW12nbWf6Uycq';
-const connectString = `mongodb+srv://maksim:${passwordDb}@cluster0-umekr.mongodb.net/test?retryWrites=true&w=majority`;
-
 const PORT = process.env.PORT || 3000;
 
 async function start() {
     try {
-        const passwordDb = 'jXkdW12nbWf6Uycq';
-        const connectString = `mongodb+srv://maksim:${passwordDb}@cluster0-umekr.mongodb.net/test?retryWrites=true&w=majority`;
+        const connectString = `mongodb+srv://maksim:jXkdW12nbWf6Uycq@cluster0-umekr.mongodb.net/shop`;
         await mongoose.connect(connectString, {useNewUrlParser: true})
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
