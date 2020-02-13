@@ -27,4 +27,45 @@ const userSchema = new Schema({
     }
 });
 
+userSchema.methods.addToCart = function(course) {     // Важно использовать function
+    const items = [...this.cart.items];
+    const index = items.findIndex(c => {
+        return c.courseId.toString() === course._id.toString();
+    });
+
+    if (index >= 0) {
+        items[index].count = items[index].count + 1;
+    } else {
+        items.push({
+            courseId: course._id,
+            count: 1
+        })
+    }
+
+    this.cart = { items };
+
+    return this.save();
+}
+
+userSchema.methods.removeFromCart = function (id) {
+    let items = [...this.cart.items];
+    const index = items.findIndex(c => {
+        return c.courseId.toString() === id.toString();
+    });
+
+    if (items[index].count === 1) {
+        items = items.filter(c => c.courseId.toString() !== id.toString());
+    } else {
+        items[index].count--;
+    }
+
+    this.cart = {items};
+    return this.save();
+}
+
+userSchema.methods.clearCart = function() {
+    this.cart = [];
+    return this.save();
+}
+
 module.exports = model('User', userSchema);
