@@ -10,8 +10,8 @@ const addRoutes = require('./routes/add');
 const cardRoutes = require('./routes/card');
 const orderRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
-const User = require('./models/user');
 const varMiddleware = require('./middleware/vaiables');
+const userMiddleware = require('./middleware/user');
 
 const MONGODB_URI = 'mongodb+srv://maksim:jXkdW12nbWf6Uycq@cluster0-umekr.mongodb.net/shop?retryWrites=true&w=majority'
 const app = express();
@@ -38,6 +38,7 @@ app.use(session({
     store
 }));
 app.use(varMiddleware);
+app.use(userMiddleware);
 
 app.use('/', homeRoutes);
 app.use('/courses', coursesRoutes);
